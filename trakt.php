@@ -37,28 +37,95 @@ class Trakt
     
     private $urls = array(
         /**
-         * Show methods
+         * Activity methods
          */
-        "/show/episode/summary.json/" => array(
+        "/activity/community.json/" => array(
+            array("name" => "types",     "optional" => true),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
+        ),
+        "/activity/episodes.json/" => array(
             array("name" => "titleOrId", "convert" => slugify),
             array("name" => "season"),
             array("name" => "episode"),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
         ),
-        "/show/related.json/" => array(
+        /*
+        "/activity/friends.json/" => array().
+        */
+        "/activity/movies.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
+        ),
+        "/activity/seasons.json/" => array(
             array("name" => "titleOrId", "convert" => slugify),
-            array("name" => "hidewatched",  "optional" => true)
+            array("name" => "season"),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
         ),
-        "/show/season.json/" => array(
+        "/activity/shows.json/" => array(
             array("name" => "titleOrId", "convert"  => slugify),
-            array("name" => "season",    "convert"  => slugify),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
         ),
-        "/show/seasons.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
+        "/activity/user.json/" => array(
+            array("name" => "username"),
+            array("name" => "types",     "optional" => true),
+            array("name" => "actions",   "optional" => true),
+            array("name" => "timestamp", "optional" => true)
         ),
-        "/show/summary.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
-            array("name" => "extended",  "optional" => true)
+        
+        /**
+         * Calendar methods
+         */
+        "/calendar/premieres.json/" => array(
+            array("name" => "date", "optional" => true),
+            array("name" => "days", "optional" => true)
         ),
+        "/calendar/shows.json/" => array(
+            array("name" => "date", "optional" => true),
+            array("name" => "days", "optional" => true)
+        ),
+        
+        /**
+         * Friends methods
+         *     TODO: Add these
+        */
+        
+        /**
+         * Genres methods
+         */
+        "/genres/movies.json/" => array(),
+        "/genres/shows.json/" => array(),
+        
+        /**
+         * Lists methods
+         *    TODO: Add these
+         */
+        
+        /**
+         * Movie methods
+         */
+        "/movie/related.json/" => array(
+            array("name" => "titleOrId",   "convert"  => slugify),
+            array("name" => "hidewatched", "optional" => true)
+        ),
+        "/movie/shouts.json/" => array(
+            array("name" => "titleOrId",   "convert"  => slugify)
+        ),
+        "/movie/summary.json/" => array(
+            array("name" => "titleOrId",   "convert"  => slugify)
+        ),
+        "/movie/watchingnow.json/" => array(
+            array("name" => "titleOrId",   "convert"  => slugify)
+        ),
+        
+        /**
+         * Movies methods
+         */
+        "/movies/trending.json/" => array(),
         
         /**
          * Search methods
@@ -80,6 +147,51 @@ class Trakt
         ),
         
         /**
+         * Show methods
+         */
+        "/show/episode/shouts.json/" => array(
+            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "season"),
+            array("name" => "episode")
+        ),
+        "/show/episode/summary.json/" => array(
+            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "season"),
+            array("name" => "episode")
+        ),
+        "/show/episode/watchingnow.json/" => array(
+            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "season"),
+            array("name" => "episode")
+        ),
+        "/show/related.json/" => array(
+            array("name" => "titleOrId",   "convert"  => slugify),
+            array("name" => "hidewatched", "optional" => true)
+        ),
+        "/show/season.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "season",    "convert"  => slugify),
+        ),
+        "/show/seasons.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify),
+        ),
+        "/show/shouts.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify)
+        ),
+        "/show/summary.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/show/watchingnow.json/" => array(
+            array("name" => "titleOrId", "convert"  => slugify)
+        ),
+        
+        /**
+         * Shows methods
+         */
+        "/shows/trending.json/" => array(),
+        
+        /**
          * User methods
          */
         "/user/calendar/shows.json/"     => array(
@@ -87,14 +199,74 @@ class Trakt
             array("name" => "date", "optional" => true),
             array("name" => "days", "optional" => true)
         ),
-        "/user/watchlist/episodes.json/" => array(array("name" => "username")),
-        "/user/watchlist/movies.json/"   => array(array("name" => "username")),
-        "/user/watchlist/shows.json/"    => array(array("name" => "username"))
+        "/user/friends.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/movies/all.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/movies/collection.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/movies/hated.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/movies/loved.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/shows/all.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/shows/collection.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/shows/hated.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/shows/loved.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/library/shows/watched.json/" => array(
+            array("name" => "username"),
+            array("name" => "extended",  "optional" => true)
+        ),
+        "/user/list.json/" => array(
+            array("name" => "username"),
+            array("name" => "slug", "convert"  => slugify)
+        ),
+        "/user/lists.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/profile.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/watching.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/watchlist/episodes.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/watchlist/movies.json/"   => array(
+            array("name" => "username")
+        ),
+        "/user/watchlist/shows.json/"    => array(
+            array("name" => "username")
+        )
     );
     
-    function Trakt($apiKey)
+    function Trakt($apiKey, $debug=false)
     {
         $this->apiKey = $apiKey;
+        $this->debug = $debug;
     }
     
     public function __call($method, $arguments)
@@ -116,6 +288,11 @@ class Trakt
                 }
             }
             $url = rtrim($url, "/");
+            
+            if ($this->debug) {
+                printf("URL: %s\n", $url);
+            }
+            
             return $this->getUrl($url);
         }
         return false;
@@ -177,7 +354,7 @@ class Trakt
                 $this->errMsg = $decoded->error;
                 return false;
             }
-            elseif (!is_array($decoded) || empty($decoded))
+            elseif (!is_array($decoded))
             {
                 $this->errMsg = 'Nothing returned';
                 return false;
@@ -186,4 +363,5 @@ class Trakt
         }
     }
 }
+
 ?>
