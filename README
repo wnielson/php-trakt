@@ -1,0 +1,6 @@
+php-trakt
+=========
+
+This is a simple class for accessing the Trakt API (api.trakt.tv).
+
+Currently, it only supports a subset of the API methods.
