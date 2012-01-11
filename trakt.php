@@ -23,27 +23,12 @@
  *    $trakt->activityFriends();
  *
  *
- * POST requests are also supported and behave in much the same way as GET requests.
- * For example, to test your login credentials, you can do:
+ * POST requests are also supported and behave in much the same way as GET requests,
+ * except that they accept a single argument which should be an array that matches the
+ * signature as described in the API docs.  For example, to test your login credentials,
+ * you can do:
  *
- *    $trakt->accountTest("myusername", "mypassword");
- *
- *
- * One important thing to note is that if one or more arguments to a POST-method are
- * listed as "optional" in the API docs, you still need to include them when calling
- * the method.  So, for example "/lists/add/" lists the "description" as optional, so
- * here's how one might use this method:
- *
- *    $trakt->listsAdd("A Test List", "", "public");
- *
- * The order of the arguments is important and follows the order defined in the API
- * docs, but if in doubt, check the source code below.  Also, for those methods that
- * use POST and require authentication, you shouldn't supply the "username" and
- * "password" as arguments, instead use the ``setAuth`` function described above.  So
- * to add a friend via "/friends/add/", one should do:
- *
- *    $trakt->setAuth("myUsername", "myPassword");
- *    $trakt->friendsAdd("myFriendsUsername");
+ *    $trakt->accountTest(array("username"=>"myusername", "password" => "mypassword"));
  *
  */
 
@@ -75,13 +60,10 @@ class Trakt
          * Account methods
          */
         "/account/create/" => array(
-            array("name" => "username", "method" => "post"),
-            array("name" => "password", "method" => "post"),
-            array("name" => "email",    "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/account/test/" => array(
-            array("name" => "username", "method" => "post"),
-            array("name" => "password", "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
     
         /**
@@ -143,19 +125,23 @@ class Trakt
          * Friends methods
          */
         "/friends/add/" => array(
-            array("name" => "friend", "action" => "post")
+            array("name" => "json", "method" => "post")
         ),
-        "/friends/all/" => null,
+        "/friends/all/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/friends/approve/" => array(
-            array("name" => "friend", "action" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/friends/delete/" => array(
-            array("name" => "friend", "action" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/friends/deny/" => array(
-            array("name" => "friend", "action" => "post")
+            array("name" => "json", "method" => "post")
         ),
-        "/friends/requests/" => null,
+        "/friends/requests/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         
         /**
          * Genres methods
@@ -168,31 +154,42 @@ class Trakt
          *    TODO: Add these
          */
         "/lists/add/" => array(
-            array("name" => "name",        "method" => "post"),
-            array("name" => "description", "method" => "post"), //"optional" => true),
-            array("name" => "privacy",     "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/lists/delete/" => array(
-            array("name" => "slug", "convert" => slugify, "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/lists/items/add/" => array(
-            array("name" => "slug", "convert" => slugify, "method" => "post"),
-            array("name" => "items", "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/lists/items/delete/" => array(
-            array("name" => "slug", "convert" => slugify, "method" => "post"),
-            array("name" => "items", "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         "/lists/update/" => array(
-            array("name" => "slug",        "method" => "post", "convert" => slugify),
-            array("name" => "name",        "method" => "post"),
-            array("name" => "description", "method" => "post"), //"optional" => true),
-            array("name" => "privacy",     "method" => "post")
+            array("name" => "json", "method" => "post")
         ),
         
         /**
          * Movie methods
          */
+        "/movie/cancelcheckin/"  => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/cancelwatching/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/checkin/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/scrobble/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/seen/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/library/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/movie/related.json/" => array(
             array("name" => "titleOrId",   "convert"  => slugify),
             array("name" => "hidewatched", "optional" => true)
@@ -203,8 +200,23 @@ class Trakt
         "/movie/summary.json/" => array(
             array("name" => "titleOrId",   "convert"  => slugify)
         ),
+        "/movie/unlibrary/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/unseen/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/unwatchlist/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/movie/watching/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/movie/watchingnow.json/" => array(
             array("name" => "titleOrId",   "convert"  => slugify)
+        ),
+        "/movie/watchlist/" => array(
+            array("name" => "json", "method" => "post")
         ),
         
         /**
@@ -213,8 +225,38 @@ class Trakt
         "/movies/trending.json/" => null,
         
         /**
+         * Rate methods
+         */
+        "/rate/episode/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/rate/movie/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/rate/show/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        
+        /**
+         * Recommendations methods
+         */
+        "/recommendations/movies/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/recommendations/movies/dismiss/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/recommendations/shows/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/recommendations/shows/dismiss/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        
+        /**
          * Search methods
          */
+
         "/search/episodes.json/" => array(
             array("name"=>"query", "convert" => urlencode)
         ),
@@ -230,10 +272,38 @@ class Trakt
         "/search/users.json/" => array(
             array("name"=>"query", "convert" => urlencode)
         ),
+
+        /**
+         * Shout methods
+         */
+        "/shout/episode/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/shout/movie/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/shout/show/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         
         /**
          * Show methods
          */
+        "/show/cancelcheckin/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/cancelwatching/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/checkin/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/episode/library/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/episode/seen/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/show/episode/shouts.json/" => array(
             array("name" => "titleOrId", "convert" => slugify),
             array("name" => "season"),
@@ -244,21 +314,48 @@ class Trakt
             array("name" => "season"),
             array("name" => "episode")
         ),
+        "/show/episode/unlibrary/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/episode/unseen/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/episode/unwatchlist/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/show/episode/watchingnow.json/" => array(
             array("name" => "titleOrId", "convert" => slugify),
             array("name" => "season"),
             array("name" => "episode")
         ),
+        "/show/episode/watchlist/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/library/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/show/related.json/" => array(
             array("name" => "titleOrId",   "convert"  => slugify),
             array("name" => "hidewatched", "optional" => true)
+        ),
+        "/show/scrobble/" => array(
+            array("name" => "json", "method" => "post")
         ),
         "/show/season.json/" => array(
             array("name" => "titleOrId", "convert"  => slugify),
             array("name" => "season",    "convert"  => slugify),
         ),
+        "/show/season/library/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/season/seen/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/show/seasons.json/" => array(
             array("name" => "titleOrId", "convert"  => slugify),
+        ),
+        "/show/seen/" => array(
+            array("name" => "json", "method" => "post")
         ),
         "/show/shouts.json/" => array(
             array("name" => "titleOrId", "convert"  => slugify)
@@ -267,8 +364,20 @@ class Trakt
             array("name" => "titleOrId", "convert"  => slugify),
             array("name" => "extended",  "optional" => true)
         ),
+        "/show/unlibrary/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/unwatchlist/" => array(
+            array("name" => "json", "method" => "post")
+        ),
+        "/show/watching/" => array(
+            array("name" => "json", "method" => "post")
+        ),
         "/show/watchingnow.json/" => array(
             array("name" => "titleOrId", "convert"  => slugify)
+        ),
+        "/show/watchlist/" => array(
+            array("name" => "json", "method" => "post")
         ),
         
         /**
@@ -365,11 +474,16 @@ class Trakt
         
         if (array_key_exists($methodUrl, $this->urls)) {
             $url = $this->buildUrl($methodUrl);
-            $post = array();
+            $post = null;
             
-            foreach($arguments as $index => $arg) {
+            foreach($arguments as $index => $arg) {            
                 if (array_key_exists($index, $this->urls[$methodUrl])) {
                     $opts = $this->urls[$methodUrl][$index];
+                    
+                    if (array_key_exists("method", $opts) && $opts["method"] == "post") {
+                        $post = $arg;
+                        break;
+                    }
                     
                     // Determine how to represent this field
                     $data = $arg;
@@ -379,12 +493,7 @@ class Trakt
                         $data = $opts["name"];
                     }
                     
-                    // Is this a post field?
-                    if (array_key_exists("method", $opts) && $opts["method"] == "post") {
-                        $post[$opts["name"]] = $data;
-                    } else {
-                        $url .= $data."/";
-                    }
+                    $url .= $data."/";
                 }
             }
             $url = rtrim($url, "/");
