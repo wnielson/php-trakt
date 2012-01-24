@@ -513,10 +513,19 @@ class Trakt
         $this->password = null;
     }
     
-    public function setAuth($username, $password)
+    /**
+     * Sets authentication for all subsequent API calls.  If ``$isHash``
+     * is ``true``, then the ``$password`` is expected to be a valid
+     * sha1 hash of the real password.
+     */
+    public function setAuth($username, $password, $isHash=false)
     {
         $this->username = $username;
-        $this->password = sha1($password);
+        $this->password = $password;
+        
+        if (!$isHash) {
+            $this->password = sha1($password);
+        }
     }
     
     /**
