@@ -75,7 +75,7 @@ class Trakt
             array("name" => "timestamp", "optional" => true)
         ),
         "/activity/episodes.json/" => array(
-            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "titleOrId", "convert" => "slugify"),
             array("name" => "season"),
             array("name" => "episode"),
             array("name" => "actions",   "optional" => true),
@@ -87,18 +87,18 @@ class Trakt
             array("name" => "timestamp", "optional" => true)
         ),
         "/activity/movies.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "titleOrId", "convert"  => "slugify"),
             array("name" => "actions",   "optional" => true),
             array("name" => "timestamp", "optional" => true)
         ),
         "/activity/seasons.json/" => array(
-            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "titleOrId", "convert" => "slugify"),
             array("name" => "season"),
             array("name" => "actions",   "optional" => true),
             array("name" => "timestamp", "optional" => true)
         ),
         "/activity/shows.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "titleOrId", "convert"  => "slugify"),
             array("name" => "actions",   "optional" => true),
             array("name" => "timestamp", "optional" => true)
         ),
@@ -191,14 +191,14 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/movie/related.json/" => array(
-            array("name" => "titleOrId",   "convert"  => slugify),
+            array("name" => "titleOrId",   "convert"  => "slugify"),
             array("name" => "hidewatched", "optional" => true)
         ),
         "/movie/shouts.json/" => array(
-            array("name" => "titleOrId",   "convert"  => slugify)
+            array("name" => "titleOrId",   "convert"  => "slugify")
         ),
         "/movie/summary.json/" => array(
-            array("name" => "titleOrId",   "convert"  => slugify)
+            array("name" => "titleOrId",   "convert"  => "slugify")
         ),
         "/movie/unlibrary/" => array(
             array("name" => "json", "method" => "post")
@@ -213,7 +213,7 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/movie/watchingnow.json/" => array(
-            array("name" => "titleOrId",   "convert"  => slugify)
+            array("name" => "titleOrId",   "convert"  => "slugify")
         ),
         "/movie/watchlist/" => array(
             array("name" => "json", "method" => "post")
@@ -258,19 +258,19 @@ class Trakt
          */
 
         "/search/episodes.json/" => array(
-            array("name"=>"query", "convert" => urlencode)
+            array("name"=>"query", "convert" => "urlencode")
         ),
         "/search/movies.json/" => array(
-            array("name"=>"query", "convert" => urlencode)
+            array("name"=>"query", "convert" => "urlencode")
         ),
         "/search/people.json/" => array(
-            array("name"=>"query", "convert" => urlencode)
+            array("name"=>"query", "convert" => "urlencode")
         ),
         "/search/shows.json/" => array(
-            array("name"=>"query", "convert" => urlencode)
+            array("name"=>"query", "convert" => "urlencode")
         ),
         "/search/users.json/" => array(
-            array("name"=>"query", "convert" => urlencode)
+            array("name"=>"query", "convert" => "urlencode")
         ),
 
         /**
@@ -305,12 +305,12 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/show/episode/shouts.json/" => array(
-            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "titleOrId", "convert" => "slugify"),
             array("name" => "season"),
             array("name" => "episode")
         ),
         "/show/episode/summary.json/" => array(
-            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "titleOrId", "convert" => "slugify"),
             array("name" => "season"),
             array("name" => "episode")
         ),
@@ -324,7 +324,7 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/show/episode/watchingnow.json/" => array(
-            array("name" => "titleOrId", "convert" => slugify),
+            array("name" => "titleOrId", "convert" => "slugify"),
             array("name" => "season"),
             array("name" => "episode")
         ),
@@ -335,15 +335,15 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/show/related.json/" => array(
-            array("name" => "titleOrId",   "convert"  => slugify),
+            array("name" => "titleOrId",   "convert"  => "slugify"),
             array("name" => "hidewatched", "optional" => true)
         ),
         "/show/scrobble/" => array(
             array("name" => "json", "method" => "post")
         ),
         "/show/season.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
-            array("name" => "season",    "convert"  => slugify),
+            array("name" => "titleOrId", "convert"  => "slugify"),
+            array("name" => "season",    "convert"  => "slugify"),
         ),
         "/show/season/library/" => array(
             array("name" => "json", "method" => "post")
@@ -352,16 +352,16 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/show/seasons.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "titleOrId", "convert"  => "slugify"),
         ),
         "/show/seen/" => array(
             array("name" => "json", "method" => "post")
         ),
         "/show/shouts.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify)
+            array("name" => "titleOrId", "convert"  => "slugify")
         ),
         "/show/summary.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify),
+            array("name" => "titleOrId", "convert"  => "slugify"),
             array("name" => "extended",  "optional" => true)
         ),
         "/show/unlibrary/" => array(
@@ -374,7 +374,7 @@ class Trakt
             array("name" => "json", "method" => "post")
         ),
         "/show/watchingnow.json/" => array(
-            array("name" => "titleOrId", "convert"  => slugify)
+            array("name" => "titleOrId", "convert"  => "slugify")
         ),
         "/show/watchlist/" => array(
             array("name" => "json", "method" => "post")
@@ -435,7 +435,7 @@ class Trakt
         ),
         "/user/list.json/" => array(
             array("name" => "username"),
-            array("name" => "slug", "convert"  => slugify)
+            array("name" => "slug", "convert"  => "slugify")
         ),
         "/user/lists.json/" => array(
             array("name" => "username")
