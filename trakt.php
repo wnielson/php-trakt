@@ -443,6 +443,12 @@ class Trakt
         "/user/profile.json/" => array(
             array("name" => "username")
         ),
+        "/user/ratings/movies.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/ratings/shows.json/" => array(
+            array("name" => "username")
+        ),
         "/user/watching.json/" => array(
             array("name" => "username")
         ),
