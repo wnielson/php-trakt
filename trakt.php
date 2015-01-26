@@ -108,6 +108,11 @@ class Trakt
             array("name" => "actions",   "optional" => true),
             array("name" => "timestamp", "optional" => true)
         ),
+        "/activity/user/movies.json/" => array(
+            array("name" => "username"),
+            array("name" => "imdbid",     "optional" => true),
+            array("name" => "actions",   "optional" => true)
+        ), 
         
         /**
          * Calendar methods
@@ -441,6 +446,12 @@ class Trakt
             array("name" => "username")
         ),
         "/user/profile.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/ratings/movies.json/" => array(
+            array("name" => "username")
+        ),
+        "/user/ratings/shows.json/" => array(
             array("name" => "username")
         ),
         "/user/watching.json/" => array(
