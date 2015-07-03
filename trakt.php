@@ -1,5 +1,4 @@
 <?php
-namespace Showtimes\Helpers;
 /**
  * A simple class for accessing the Trakt API.  You can use it like so:
  *
