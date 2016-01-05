@@ -2,10 +2,16 @@
 /**
  * A simple class for accessing the Trakt API.  You can use it like so:
  *
- *  $trakt = new Trakt("You API Key");
+ *  $trakt = new Trakt([
+ *          'clientId' => "YOUR_APP_ID",
+ *          'clientSecret' => "YOUR_APP_SECRET",
+ *          "mode" => "production"
+ *  ]);
+ *  
+ *  $trakt->shows("game-of-thrones");
  *  $trakt->showSeasons("The Walking Dead", true);
  *
- * You can view the list of available API methods here: http://trakt.tv/api-docs
+ * You can view the list of available API methods here: http://docs.trakt.apiary.io/
  * To call a method, such as "search/movies", the ``Trakt`` class will respond
  * to the corresponding method name "searchMovies".  So, in the above example, the
  * following would work:
@@ -394,6 +400,9 @@ class Trakt
 		/**
 		 * Shows methods
 		 */
+		 "/shows/" => array(
+                        array("name" => "json", "method" => "get")
+                ),
 		"/shows/trending/" => null,
 
 		/**
